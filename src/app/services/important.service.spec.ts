@@ -1,4 +1,4 @@
-import { of, take, toArray } from 'rxjs';
+import { firstValueFrom, of, take, toArray } from 'rxjs';
 import { ImportantService } from './important.service';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -19,6 +19,15 @@ describe('ImportantService', () => {
       expect(num).toBe(42);
       done();
     });
+  });
+
+  it('should verify value from number$ observable via async function', async () => {
+    // For Observables that emit only one value and then close (classic for HttpClient Requests)
+    // you can also use an async function / promise combination.
+
+    const result = await firstValueFrom(subject.number$);
+
+    expect(result).toBe(42);
   });
 
   it('should verify values from numbers$ observable', (done) => {
